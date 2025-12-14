@@ -3,7 +3,24 @@ import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Screen } from '../components/Screen';
 
-const budgets = [
+type BudgetItemIcon =
+  | { name: keyof typeof Ionicons.glyphMap; bg: string; color: string; isMaterial?: false }
+  | { name: keyof typeof MaterialCommunityIcons.glyphMap; bg: string; color: string; isMaterial: true };
+
+type BudgetItem = {
+  id: string;
+  title: string;
+  left: string;
+  spent: string;
+  limit: string;
+  percent: number;
+  color: string;
+  accentBg: string;
+  status: string;
+  icon: BudgetItemIcon;
+};
+
+const budgets: BudgetItem[] = [
   {
     id: 'groceries',
     title: 'Groceries',
@@ -38,17 +55,17 @@ const budgets = [
     color: '#E53935',
     accentBg: '#FFE6E6',
     status: '',
-    icon: { name: 'party-popper' as const, bg: '#F1E6FF', color: '#9147F5', isMaterial: true },
+    icon: { name: 'party-popper', bg: '#F1E6FF', color: '#9147F5', isMaterial: true },
   },
 ];
 
 export const HomeScreen: React.FC = () => {
   return (
-    <Screen background="#f7f5ed">
+    <Screen background="#f7f5ed" scrollable={false}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.headerIcon}>
-            <Ionicons name="md-piggy-bank" size={24} color="#FADB00" />
+            <MaterialCommunityIcons name="piggy-bank-outline" size={24} color="#FADB00" />
           </View>
           <View style={styles.monthPill}>
             <Ionicons name="calendar-outline" size={18} color="#5C5C4D" />
